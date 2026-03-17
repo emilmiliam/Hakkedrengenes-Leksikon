@@ -21,11 +21,18 @@ db.exec(`
     vilde_vaaben INTEGER,
     staerke_oneliners INTEGER,
     episk_action INTEGER,
-    bonus_score INTEGER,
     bonus_label TEXT,
-    overall_score REAL, -- out of 50 (5 categories × 10 points each, + optional bonus)
-    notes TEXT
+    bonus_score INTEGER,
+    overall_score REAL,
+    notes TEXT,
+    body_count INTEGER
   );
 `);
+
+try {
+  db.exec(`ALTER TABLE ratings ADD COLUMN body_count INTEGER`);
+} catch (e) {
+  // Column already exists, ignore
+}
 
 export default db;

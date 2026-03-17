@@ -25,14 +25,14 @@ export async function POST(request) {
       fed_skurk, bar_hud_store_muskler, vilde_vaaben,
       staerke_oneliners, episk_action,
       bonus_label, bonus_score,
-      overall_score, notes
+      overall_score, notes, body_count
     ) VALUES (
       (SELECT id FROM movies WHERE tmdb_id = @tmdb_id),
       @episode_number,
       @fed_skurk, @bar_hud_store_muskler, @vilde_vaaben,
       @staerke_oneliners, @episk_action,
       @bonus_label, @bonus_score,
-      @overall_score, @notes
+      @overall_score, @notes, @body_count
     )
   `);
 

@@ -16,6 +16,7 @@ export default function AdminPage() {
   const [episode, setEpisode] = useState('');
   const [bonusLabel, setBonusLabel] = useState('');
   const [bonusScore, setBonusScore] = useState('');
+  const [bodyCount, setBodyCount] = useState('');
   const [notes, setNotes] = useState('');
   const [status, setStatus] = useState(null);
 
@@ -52,6 +53,7 @@ export default function AdminPage() {
       notes: notes || null,
       bonus_label: bonusLabel || null,
       bonus_score: bonusScore ? parseInt(bonusScore) : null,
+      body_count: bodyCount ? parseInt(bodyCount) : null,
       overall_score: CATEGORIES.reduce((sum, { key }) => sum + (scores[key] ?? 0), 0) + (bonusScore ? parseInt(bonusScore) : 0),
       ...Object.fromEntries(CATEGORIES.map(({ key }) => [key, scores[key] ?? 0])),
     };
@@ -70,6 +72,7 @@ export default function AdminPage() {
       setEpisode('');
       setBonusLabel('');
       setBonusScore('');
+      setBodyCount('');
       setNotes('');
     } else {
       setStatus('error');
@@ -81,7 +84,6 @@ export default function AdminPage() {
       <h1 className="text-3xl font-bold text-foreground mb-2">Tilføj film</h1>
       <p className="text-muted-foreground mb-8">Søg efter en film og tilføj Hakkedrengenes scores</p>
 
-      {/* Movie search */}
       <div className="flex gap-3 mb-4">
         <Input
           placeholder="Søg efter film på TMDB..."
@@ -97,7 +99,6 @@ export default function AdminPage() {
         </button>
       </div>
 
-      {/* Search results */}
       {results.length > 0 && (
         <div className="grid grid-cols-3 gap-3 mb-8">
           {results.map((movie) => (
@@ -124,7 +125,6 @@ export default function AdminPage() {
         </div>
       )}
 
-      {/* Selected movie + score form */}
       {selected && (
         <div className="space-y-6">
           <div className="flex items-center gap-4">
@@ -146,7 +146,6 @@ export default function AdminPage() {
 
           <Separator />
 
-          {/* Episode number */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">Afsnit nummer</label>
             <Input
@@ -158,7 +157,6 @@ export default function AdminPage() {
             />
           </div>
 
-          {/* Category scores */}
           <div className="space-y-3">
             <h3 className="text-sm font-medium text-foreground">Kategorier (0–10)</h3>
             <div className="grid grid-cols-2 gap-4">
@@ -177,7 +175,6 @@ export default function AdminPage() {
             </div>
           </div>
 
-          {/* Bonus category */}
           <div className="space-y-3">
             <h3 className="text-sm font-medium text-foreground">Ekstra kategori (valgfri)</h3>
             <div className="grid grid-cols-2 gap-4">
@@ -202,7 +199,18 @@ export default function AdminPage() {
             </div>
           </div>
 
-          {/* Notes */}
+          <div className="space-y-1">
+            <label className="text-sm font-medium text-foreground">Body count</label>
+            <Input
+              type="number"
+              min={0}
+              placeholder="Hvor mange dør i denne her fucking film"
+              value={bodyCount}
+              onChange={(e) => setBodyCount(e.target.value)}
+              className="w-48"
+            />
+          </div>
+
           <div className="space-y-1">
             <label className="text-sm font-medium text-foreground">Noter (valgfri)</label>
             <Input
@@ -212,7 +220,6 @@ export default function AdminPage() {
             />
           </div>
 
-          {/* Total preview */}
           <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between">
             <span className="text-sm text-muted-foreground">Total score</span>
             <span className="text-2xl font-bold text-foreground">
@@ -230,7 +237,7 @@ export default function AdminPage() {
           </button>
 
           {status === 'success' && (
-            <p className="text-green-500 text-sm text-center">Film tilføjet!</p>
+            <p className="text-green-500 text-sm text-center">Film tilføjet! ✓</p>
           )}
           {status === 'error' && (
             <p className="text-destructive text-sm text-center">Noget gik galt. Prøv igen.</p>

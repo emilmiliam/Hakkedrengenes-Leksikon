@@ -1,20 +1,19 @@
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import RatingBreakdown from '@/components/RatingBreakdown';
+import MovieDetails from '@/components/MovieDetails';
 
 export default async function MoviePage({ params }) {
   const { id } = await params;
 
-  // Fetch our podcast ratings from the DB
   const ratingsRes = await fetch(`http://localhost:3000/api/movies`, {
     cache: 'no-store',
   });
   const allMovies = await ratingsRes.json();
   const movie = allMovies.find((m) => m.tmdb_id === parseInt(id));
 
-  // Fetch full movie details + cast from TMDB via our secure proxy
   const tmdbRes = await fetch(`http://localhost:3000/api/tmdb?movieId=${id}`, {
     cache: 'no-store',
   });
@@ -25,33 +24,42 @@ export default async function MoviePage({ params }) {
     : null;
 
   const cast = tmdb.credits?.cast?.slice(0, 6) ?? [];
+  const tmdbUrl = `https://www.themoviedb.org/movie/${id}`;
 
   return (
     <main className="min-h-screen bg-background max-w-5xl mx-auto px-6 py-12">
 
-      {/* Back link */}
       <Link href="/" className="text-muted-foreground hover:text-foreground text-sm mb-8 inline-block">
         ← Tilbage
       </Link>
 
-      {/* Hero section */}
+      {/* Hero — poster + info side by side */}
       <div className="flex flex-col md:flex-row gap-8 mt-4">
+
+        {/* Poster */}
         {posterUrl && (
-          <div className="relative w-48 h-72 shrink-0 rounded-xl overflow-hidden shadow-2xl">
+          <div className="relative w-48 shrink-0 rounded-xl overflow-hidden shadow-2xl self-start" style={{ aspectRatio: '2/3' }}>
             <Image src={posterUrl} alt={tmdb.title} fill className="object-cover" />
           </div>
         )}
 
-        <div className="flex flex-col justify-end gap-3">
+        {/* Middle — title, synopsis, genres */}
+        <div className="flex flex-col gap-3 flex-1">
           <h1 className="text-4xl font-bold text-foreground">{tmdb.title}</h1>
-          <p className="text-muted-foreground">{tmdb.release_date?.slice(0, 4)} · {tmdb.runtime} min</p>
-          <p className="text-muted-foreground max-w-xl text-sm leading-relaxed">{tmdb.overview}</p>
-          <div className="flex gap-2 flex-wrap mt-2">
+          <p className="text-muted-foreground text-sm">{tmdb.release_date?.slice(0, 4)} · {tmdb.runtime} min</p>
+          <p className="text-muted-foreground text-sm leading-relaxed">{tmdb.overview}</p>
+          <div className="flex gap-2 flex-wrap mt-1">
             {tmdb.genres?.map((g) => (
               <Badge key={g.id} variant="secondary">{g.name}</Badge>
             ))}
           </div>
         </div>
+
+        {/* Right — film info box */}
+        <div className="shrink-0 w-full md:w-56">
+          <MovieDetails tmdb={tmdb} movie={movie} />
+        </div>
+
       </div>
 
       <Separator className="my-8" />
@@ -63,7 +71,18 @@ export default async function MoviePage({ params }) {
 
       {/* Cast */}
       <div>
-        <h2 className="text-xl font-semibold text-foreground mb-4">Cast</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold text-foreground">Cast</h2>
+          <a
+            href={`${tmdbUrl}/cast`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Se hele castet på TMDB →
+          </a>
+        </div>
+
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
           {cast.map((actor) => (
             <div key={actor.id} className="flex flex-col items-center text-center gap-2">
