@@ -23,7 +23,7 @@ db.exec(`
     episk_action INTEGER,
     bonus_score INTEGER,
     bonus_label TEXT,
-    overall_score REAL,
+    overall_score REAL, -- out of 50 (5 categories × 10 points each, + optional bonus)
     notes TEXT
   );
 `);
