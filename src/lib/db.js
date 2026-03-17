@@ -15,7 +15,6 @@ db.exec(`
   CREATE TABLE IF NOT EXISTS ratings (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     movie_id INTEGER REFERENCES movies(id),
-    episode_number INTEGER,
     fed_skurk INTEGER,
     bar_hud_store_muskler INTEGER,
     vilde_vaaben INTEGER,
@@ -31,8 +30,10 @@ db.exec(`
 
 try {
   db.exec(`ALTER TABLE ratings ADD COLUMN body_count INTEGER`);
-} catch (e) {
-  // Column already exists, ignore
-}
+} catch (e) {}
+
+try {
+  db.exec(`ALTER TABLE ratings DROP COLUMN episode_number`);
+} catch (e) {}
 
 export default db;

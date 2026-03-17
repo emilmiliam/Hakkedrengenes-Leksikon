@@ -13,7 +13,6 @@ export default function AdminPage() {
   const [results, setResults] = useState([]);
   const [selected, setSelected] = useState(null);
   const [scores, setScores] = useState({});
-  const [episode, setEpisode] = useState('');
   const [bonusLabel, setBonusLabel] = useState('');
   const [bonusScore, setBonusScore] = useState('');
   const [bodyCount, setBodyCount] = useState('');
@@ -49,7 +48,6 @@ export default function AdminPage() {
       title: selected.title,
       year: parseInt(selected.release_date?.slice(0, 4)),
       poster_path: selected.poster_path,
-      episode_number: parseInt(episode),
       notes: notes || null,
       bonus_label: bonusLabel || null,
       bonus_score: bonusScore ? parseInt(bonusScore) : null,
@@ -69,7 +67,6 @@ export default function AdminPage() {
       setSelected(null);
       setQuery('');
       setScores({});
-      setEpisode('');
       setBonusLabel('');
       setBonusScore('');
       setBodyCount('');
@@ -145,17 +142,6 @@ export default function AdminPage() {
           </div>
 
           <Separator />
-
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Afsnit nummer</label>
-            <Input
-              type="number"
-              placeholder="fx 3"
-              value={episode}
-              onChange={(e) => setEpisode(e.target.value)}
-              className="w-32"
-            />
-          </div>
 
           <div className="space-y-3">
             <h3 className="text-sm font-medium text-foreground">Kategorier (0–10)</h3>

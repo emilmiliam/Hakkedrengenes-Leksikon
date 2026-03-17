@@ -8,14 +8,13 @@ export async function GET() {
 
   const insertRating = db.prepare(`
     INSERT INTO ratings (
-      movie_id, episode_number,
+      movie_id,
       fed_skurk, bar_hud_store_muskler, vilde_vaaben,
       staerke_oneliners, episk_action,
       bonus_label, bonus_score,
       overall_score, notes
     ) VALUES (
       (SELECT id FROM movies WHERE tmdb_id = @tmdb_id),
-      @episode_number,
       @fed_skurk, @bar_hud_store_muskler, @vilde_vaaben,
       @staerke_oneliners, @episk_action,
       @bonus_label, @bonus_score,
@@ -28,13 +27,11 @@ export async function GET() {
     insertRating.run(data);
   });
 
-  // The Terminator (1984)
   addMovie({
     tmdb_id: 218,
     title: 'The Terminator',
     year: 1984,
-    poster_path: '/qvktm0BHcnmDpul4Hz01GIazWPr.jpg',
-    episode_number: 1,
+    poster_path: '/qvktm0BHcnmDpu14Hz0lGIazWPr.jpg',
     fed_skurk: 10,
     bar_hud_store_muskler: 9,
     vilde_vaaben: 10,
@@ -46,13 +43,11 @@ export async function GET() {
     notes: 'En klassiker. Arnold er perfekt som maskine.',
   });
 
-  // Die Hard (1988)
   addMovie({
     tmdb_id: 562,
     title: 'Die Hard',
     year: 1988,
     poster_path: '/yFihWxQcmqcaBR31QM6Y8gT6aYV.jpg',
-    episode_number: 2,
     fed_skurk: 10,
     bar_hud_store_muskler: 7,
     vilde_vaaben: 9,
