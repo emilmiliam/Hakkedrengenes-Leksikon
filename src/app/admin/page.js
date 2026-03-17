@@ -52,7 +52,8 @@ export default function AdminPage() {
       bonus_label: bonusLabel || null,
       bonus_score: bonusScore ? parseInt(bonusScore) : null,
       body_count: bodyCount ? parseInt(bodyCount) : null,
-      overall_score: CATEGORIES.reduce((sum, { key }) => sum + (scores[key] ?? 0), 0) + (bonusScore ? parseInt(bonusScore) : 0),
+      // Only sum the 5 fixed categories — bonus does not affect ranking
+      overall_score: CATEGORIES.reduce((sum, { key }) => sum + (scores[key] ?? 0), 0),
       ...Object.fromEntries(CATEGORIES.map(({ key }) => [key, scores[key] ?? 0])),
     };
 
@@ -190,7 +191,7 @@ export default function AdminPage() {
             <Input
               type="number"
               min={0}
-              placeholder="Hvor mange dør i denne her fucking film"
+              placeholder="Antal dødsfald på skærmen"
               value={bodyCount}
               onChange={(e) => setBodyCount(e.target.value)}
               className="w-48"
@@ -206,11 +207,12 @@ export default function AdminPage() {
             />
           </div>
 
+          {/* Total preview — bonus excluded */}
           <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between">
             <span className="text-sm text-muted-foreground">Total score</span>
             <span className="text-2xl font-bold text-foreground">
-              {CATEGORIES.reduce((sum, { key }) => sum + (scores[key] ?? 0), 0) + (bonusScore ? parseInt(bonusScore) : 0)}
-              <span className="text-sm font-normal text-muted-foreground">/{bonusLabel ? 60 : 50}</span>
+              {CATEGORIES.reduce((sum, { key }) => sum + (scores[key] ?? 0), 0)}
+              <span className="text-sm font-normal text-muted-foreground">/50</span>
             </span>
           </div>
 

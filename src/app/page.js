@@ -46,8 +46,8 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background px-6 py-12 max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold tracking-tight text-foreground">Hakkedrengene</h1>
-        <p className="text-muted-foreground mt-2">Alle filmene hakkedrengene har set</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">Hakkedrengenes Leksikon</h1>
+        <p className="text-muted-foreground mt-2">Alle film hakkedrengene har set og rated</p>
       </div>
 
       <div className="flex flex-row gap-4 mb-8 items-start">
