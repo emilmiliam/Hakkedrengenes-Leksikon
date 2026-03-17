@@ -33,19 +33,27 @@ export default function MovieCard({ movie }) {
               Intet billede
             </div>
           )}
+        </div>
 
-          {/* Score badge with hover card */}
+        {/* Info */}
+        <div className="p-3 space-y-1">
+          <h3 className="font-semibold text-sm leading-tight line-clamp-2 text-foreground">
+            {movie.title}
+          </h3>
+
+          {/* Year + score on same line */}
           <div
-            className="absolute top-2 right-2"
+            className="flex items-center justify-between"
             onClick={(e) => e.preventDefault()}
           >
+            <p className="text-xs text-muted-foreground">{movie.year}</p>
             <HoverCard>
               <HoverCardTrigger asChild>
-                <Badge className="bg-black/80 text-white border-none text-sm font-bold px-2 py-1 cursor-default">
+                <Badge className="bg-primary/20 text-primary border-none text-xs font-bold cursor-default hover:bg-primary/30 transition-colors">
                   {movie.overall_score}/50
                 </Badge>
               </HoverCardTrigger>
-              <HoverCardContent className="w-56 p-3" side="left">
+              <HoverCardContent className="w-56 p-3" side="top">
                 <p className="text-xs font-semibold text-foreground mb-2">Hakkedrengenes dom</p>
                 <div className="space-y-1">
                   {CATEGORIES.map(({ key, label }) => (
@@ -64,14 +72,6 @@ export default function MovieCard({ movie }) {
               </HoverCardContent>
             </HoverCard>
           </div>
-        </div>
-
-        {/* Info */}
-        <div className="p-3 space-y-1">
-          <h3 className="font-semibold text-sm leading-tight line-clamp-2 text-foreground">
-            {movie.title}
-          </h3>
-          <p className="text-xs text-muted-foreground">{movie.year}</p>
         </div>
 
       </Card>
