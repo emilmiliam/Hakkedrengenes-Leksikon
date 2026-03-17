@@ -33,7 +33,7 @@ export async function GET() {
     tmdb_id: 218,
     title: 'The Terminator',
     year: 1984,
-    poster_path: '/qvktm0BHcnmDpul4Hz0lGIazWPr.jpg',
+    poster_path: '/qvktm0BHcnmDpul4Hz01GIazWPr.jpg',
     episode_number: 1,
     fed_skurk: 10,
     bar_hud_store_muskler: 9,
