@@ -40,21 +40,21 @@ export default function Home() {
 
   const hosts = [
     {
-      name: 'Jacob',
+      name: 'Jacob Ege Hinchely',
       role: 'Vært',
       bio: 'Podcast og radiovært',
       image: '/Jacob.jpg',
       socials: [{ href: 'https://www.instagram.com/finchely/' }],
     },
     {
-      name: 'Dan',
+      name: 'Dan Andersen',
       role: 'Vært',
       bio: 'Komiker',
       image: '/Dan.jpg',
       socials: [{ href: 'https://www.instagram.com/danandersen_guitarshow/' }],
     },
     {
-      name: 'Morten',
+      name: 'Morten Wichmann',
       role: 'Vært',
       bio: 'Komiker',
       image: '/Morten.jpg',
