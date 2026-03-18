@@ -33,5 +33,6 @@ db.exec(`
 try { db.exec(`ALTER TABLE movies ADD COLUMN backdrop_path TEXT`); } catch (e) {}
 try { db.exec(`ALTER TABLE ratings ADD COLUMN body_count INTEGER`); } catch (e) {}
 try { db.exec(`ALTER TABLE ratings DROP COLUMN episode_number`); } catch (e) {}
+try { db.exec(`CREATE UNIQUE INDEX IF NOT EXISTS idx_ratings_movie_id ON ratings(movie_id)`); } catch (e) {}
 
 export default db;
