@@ -1,74 +1,65 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import MovieCard from '@/components/MovieCard';
-import SearchBar from '@/components/SearchBar';
-import FilterPanel from '@/components/FilterPanel';
+import Image from 'next/image';
+import Link from 'next/link';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import { Badge } from '@/components/ui/badge';
 
 export default function Home() {
-  const [movies, setMovies] = useState([]);
-  const [search, setSearch] = useState('');
-  const [sortKeys, setSortKeys] = useState(['overall_score']);
-  const [sortDir, setSortDir] = useState('desc');
-  const [onlyBonus, setOnlyBonus] = useState(false);
+  const [featured, setFeatured] = useState([]);
 
   useEffect(() => {
-    fetch('/api/movies')
+    fetch('/api/movies?carousel=true')
       .then((res) => res.json())
-      .then((data) => setMovies(data));
+      .then((data) => setFeatured(data));
   }, []);
 
-  function handleFilterChange({ sortKeys, sortDir, onlyBonus }) {
-    setSortKeys(sortKeys);
-    setSortDir(sortDir);
-    setOnlyBonus(onlyBonus);
-  }
-
-  let filtered = [...movies];
-
-  if (search.trim()) {
-    filtered = filtered.filter((m) =>
-      m.title.toLowerCase().includes(search.toLowerCase())
-    );
-  }
-
-  if (onlyBonus) {
-    filtered = filtered.filter((m) => m.bonus_label != null);
-  }
-
-  filtered.sort((a, b) => {
-    // Sum all selected keys for each movie
-    const aVal = sortKeys.reduce((sum, key) => sum + (a[key] ?? 0), 0);
-    const bVal = sortKeys.reduce((sum, key) => sum + (b[key] ?? 0), 0);
-    return sortDir === 'desc' ? bVal - aVal : aVal - bVal;
-  });
-
   return (
-    <main className="min-h-screen bg-background px-6 py-12 max-w-7xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold tracking-tight text-foreground">Hakkedrengenes Leksikon</h1>
-        <p className="text-muted-foreground mt-2">Alle film hakkedrengene har set og rated</p>
-      </div>
+    <div className="min-h-screen bg-background">
 
-      <div className="flex flex-row gap-4 mb-8 items-start">
-        <SearchBar value={search} onChange={setSearch} />
-        <FilterPanel
-          sortKeys={sortKeys}
-          sortDir={sortDir}
-          onlyBonus={onlyBonus}
-          onChange={handleFilterChange}
-        />
-      </div>
-
-      {filtered.length === 0 ? (
-        <p className="text-muted-foreground">Ingen film matcher din søgning.</p>
-      ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {filtered.map((movie) => (
-            <MovieCard key={movie.tmdb_id} movie={movie} />
-          ))}
-        </div>
+      {/* ── Hero carousel ── */}
+      {featured.length > 0 && (
+        <section className="relative w-full">
+          <Carousel opts={{ loop: true }} className="w-full">
+            <CarouselContent>
+              {featured.map((movie) => (
+                <CarouselItem key={movie.tmdb_id}>
+                  <Link href={`/movies/${movie.id}`}>
+                    <div className="relative w-full h-[520px] overflow-hidden">
+                      <Image
+                        src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
+                        alt={movie.title}
+                        fill
+                        className="object-cover"
+                        priority
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+                      <div className="absolute bottom-12 left-10">
+                        <p className="text-4xl font-bold text-white drop-shadow mb-3">{movie.title}</p>
+                        <div className="flex items-center gap-3">
+                          <Badge variant="secondary" className="text-sm">
+                            {movie.overall_score}/50
+                          </Badge>
+                          <span className="text-white/70 text-sm">{movie.year}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-4" />
+            <CarouselNext className="right-4" />
+          </Carousel>
+        </section>
       )}
-    </main>
+    </div>
   );
 }

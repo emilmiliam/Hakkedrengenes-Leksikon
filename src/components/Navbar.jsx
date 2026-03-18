@@ -10,6 +10,9 @@ export default function Navbar() {
         </Link>
 
         <div className="flex items-center gap-6 text-sm">
+          <Link href="/movies" className="text-muted-foreground hover:text-foreground transition-colors">
+            Alle film
+          </Link>
           <Link href="/admin" className="text-muted-foreground hover:text-foreground transition-colors">
             Tilføj film
           </Link>

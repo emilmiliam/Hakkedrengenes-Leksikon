@@ -9,7 +9,8 @@ db.exec(`
     tmdb_id INTEGER UNIQUE NOT NULL,
     title TEXT NOT NULL,
     year INTEGER,
-    poster_path TEXT
+    poster_path TEXT,
+    backdrop_path TEXT
   );
 
   CREATE TABLE IF NOT EXISTS ratings (
@@ -28,12 +29,9 @@ db.exec(`
   );
 `);
 
-try {
-  db.exec(`ALTER TABLE ratings ADD COLUMN body_count INTEGER`);
-} catch (e) {}
-
-try {
-  db.exec(`ALTER TABLE ratings DROP COLUMN episode_number`);
-} catch (e) {}
+// Safe migrations — won't crash if column already exists
+try { db.exec(`ALTER TABLE movies ADD COLUMN backdrop_path TEXT`); } catch (e) {}
+try { db.exec(`ALTER TABLE ratings ADD COLUMN body_count INTEGER`); } catch (e) {}
+try { db.exec(`ALTER TABLE ratings DROP COLUMN episode_number`); } catch (e) {}
 
 export default db;

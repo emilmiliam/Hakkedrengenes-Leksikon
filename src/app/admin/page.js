@@ -48,6 +48,7 @@ export default function AdminPage() {
       title: selected.title,
       year: parseInt(selected.release_date?.slice(0, 4)),
       poster_path: selected.poster_path,
+      backdrop_path: selected.backdrop_path ?? null,
       notes: notes || null,
       bonus_label: bonusLabel || null,
       bonus_score: bonusScore ? parseInt(bonusScore) : null,
