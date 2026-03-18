@@ -18,7 +18,7 @@ export default function MovieDetails({ tmdb, movie }) {
     },
     {
       label: 'Body count',
-      value: movie?.body_count != null ? `${movie.body_count} dødsfald` : 'Ikke talt',
+      value: movie?.body_count != null ? `${movie.body_count}` : 'Ikke talt',
     },
   ];
 
