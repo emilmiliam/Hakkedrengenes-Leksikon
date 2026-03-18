@@ -3,11 +3,15 @@ import { CATEGORIES } from '@/lib/categories';
 export default function RatingBreakdown({ movie }) {
   return (
     <div>
-      <div className="flex items-baseline gap-3 mb-6">
-        <h2 className="text-xl font-semibold text-foreground">Hakkedrengenes dom</h2>
-        <span className="text-3xl font-bold text-foreground">{movie.overall_score}</span>
-        <span className="text-muted-foreground">/50</span>
+      <div className="bg-card border border-border rounded-xl p-4 mb-6">
+        <h2 className="text-xl font-semibold text-foreground mb-1">Hakkedrengenes dom</h2>
+        <p className="text-3xl font-bold text-foreground">
+          {movie.overall_score}
+          <span className="text-sm text-muted-foreground font-normal">/50</span>
+        </p>
       </div>
+
+
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {CATEGORIES.map(({ key, label }) => (
