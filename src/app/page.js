@@ -18,7 +18,7 @@ export default function Home() {
   const { theme } = useTheme();
   const [featured, setFeatured] = useState([]);
   const [api, setApi] = useState(null);
-  const [mounted, setMounted] = useState(false); // ✅ ADDED
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     fetch('/api/movies?carousel=true')
@@ -35,7 +35,7 @@ export default function Home() {
   }, [api]);
 
   useEffect(() => {
-    setMounted(true); // ✅ ADDED
+    setMounted(true);
   }, []);
 
   const hosts = [
@@ -62,7 +62,6 @@ export default function Home() {
     },
   ];
 
-  // ✅ CHANGED: only resolve color after mount so server/client match
   const vignetteColor = mounted
     ? theme === 'dark' ? '#242425' : '#dad3c1'
     : '#242425';
@@ -170,7 +169,6 @@ export default function Home() {
                         title={domain}
                         className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:border-primary transition-colors"
                       >
-                        {/* ✅ CHANGED: Next.js Image with unoptimized for external favicon */}
                         <Image
                           src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
                           alt={domain}

@@ -30,7 +30,6 @@ export default async function MoviePage({ params }) {
 
   const cast = tmdb.credits?.cast?.slice(0, 6) ?? [];
 
-  // ✅ ADDED: filter crew to key roles only, deduplicated by name
   const CREW_ROLES = ['Director', 'Producer', 'Screenplay', 'Writer', 'Director of Photography', 'Original Music Composer'];
   const crew = (tmdb.credits?.crew ?? [])
     .filter((c) => CREW_ROLES.includes(c.job))
