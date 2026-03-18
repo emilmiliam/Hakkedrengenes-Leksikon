@@ -128,7 +128,7 @@ export default function Home() {
           Hvem er Hakkedrengene?
         </h2>
         <p className="text-muted-foreground text-center max-w-2xl mx-auto leading-relaxed mb-12">
-          {"I Hakkedrengene går Jacob, Dan og Morten i dybden med de største actionfilm fra 80'erne og frem til nu. De snakker om film med fremragende skuespillere som Arnold Schwarzenegger, Sylvester Stallone, Jean Claude Van Damme, Tom Cruise, Keanu Reeves m.fl. Det er film fra deres barndom som de elsker, og den kærlighed giver de nu videre i podcastformat."}
+          {"I Hakkedrengene dykker Jacob, Dan og Morten ned i de største actionfilm fra 80'erne og frem til nu. I fokus er ikoniske film med legendariske navne som Arnold Schwarzenegger, Sylvester Stallone, Jean-Claude Van Damme, Tom Cruise og Keanu Reeves. Det er barndomsfilm, de brænder for – og den kærlighed formidler de nu videre i podcastformat."}
         </p>
 
         <Separator className="mb-12" />
