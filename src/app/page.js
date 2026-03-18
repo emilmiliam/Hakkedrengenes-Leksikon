@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/badge';
 
 export default function Home() {
   const [featured, setFeatured] = useState([]);
+  const [api, setApi] = useState(null);
 
   useEffect(() => {
     fetch('/api/movies?carousel=true')
@@ -21,23 +22,33 @@ export default function Home() {
       .then((data) => setFeatured(data));
   }, []);
 
+  useEffect(() => {
+    if (!api) return;
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [api]);
+
   return (
     <div className="min-h-screen bg-background">
-
-      {/* ── Hero carousel ── */}
       {featured.length > 0 && (
         <section className="relative w-full">
-          <Carousel opts={{ loop: true }} className="w-full">
+          <Carousel
+            setApi={setApi}
+            opts={{ loop: true }}
+            className="w-full"
+          >
             <CarouselContent>
               {featured.map((movie) => (
                 <CarouselItem key={movie.tmdb_id}>
-                  <Link href={`/movies/${movie.id}`}>
+                  <Link href={`/movies/${movie.tmdb_id}`}>
                     <div className="relative w-full h-[520px] overflow-hidden">
                       <Image
                         src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
                         alt={movie.title}
                         fill
-                        className="object-cover"
+                        className="object-cover object-top"
                         priority
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />

@@ -29,6 +29,16 @@ export default async function MoviePage({ params }) {
     : null;
 
   const cast = tmdb.credits?.cast?.slice(0, 6) ?? [];
+
+  // ✅ ADDED: filter crew to key roles only, deduplicated by name
+  const CREW_ROLES = ['Director', 'Producer', 'Screenplay', 'Writer', 'Director of Photography', 'Original Music Composer'];
+  const crew = (tmdb.credits?.crew ?? [])
+    .filter((c) => CREW_ROLES.includes(c.job))
+    .reduce((acc, c) => {
+      if (!acc.find((x) => x.id === c.id && x.job === c.job)) acc.push(c);
+      return acc;
+    }, []);
+
   const tmdbUrl = `https://www.themoviedb.org/movie/${id}`;
 
   return (
@@ -45,10 +55,7 @@ export default async function MoviePage({ params }) {
             priority
           />
         )}
-        {/* Gradient — fades into background at bottom */}
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-
-        {/* Tilbage link sits on top of the backdrop */}
         <div className="absolute top-6 left-6 max-w-5xl">
           <Link href="/movies" className="text-white/80 hover:text-white text-sm transition-colors">
             ← Tilbage
@@ -56,20 +63,18 @@ export default async function MoviePage({ params }) {
         </div>
       </div>
 
-      {/* Content — pulled up over the backdrop gradient */}
+      {/* Content */}
       <div className="max-w-5xl mx-auto px-6 -mt-32 relative z-10 pb-16">
 
         {/* Hero — poster + info side by side */}
         <div className="flex flex-col md:flex-row gap-8 mt-4">
 
-          {/* Poster */}
           {posterUrl && (
             <div className="relative w-48 shrink-0 rounded-xl overflow-hidden shadow-2xl self-start" style={{ aspectRatio: '2/3' }}>
               <Image src={posterUrl} alt={tmdb.title} fill className="object-cover" />
             </div>
           )}
 
-          {/* Middle — title, synopsis, genres */}
           <div className="flex flex-col gap-3 flex-1">
             <h1 className="text-4xl font-bold text-foreground">{tmdb.title}</h1>
             <p className="text-muted-foreground text-sm">{tmdb.release_date?.slice(0, 4)} · {tmdb.runtime} min</p>
@@ -81,7 +86,6 @@ export default async function MoviePage({ params }) {
             </div>
           </div>
 
-          {/* Right — film info box */}
           <div className="shrink-0 w-full md:w-56">
             <MovieDetails tmdb={tmdb} movie={movie} />
           </div>
@@ -90,7 +94,6 @@ export default async function MoviePage({ params }) {
 
         <Separator className="my-8" />
 
-        {/* Podcast ratings */}
         {movie && <RatingBreakdown movie={movie} />}
 
         <Separator className="my-8" />
@@ -130,6 +133,46 @@ export default async function MoviePage({ params }) {
             ))}
           </div>
         </div>
+
+        <Separator className="my-8" />
+
+        {/* Crew */}
+        {crew.length > 0 && (
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold text-foreground">Crew</h2>
+              <a
+                href={`${tmdbUrl}/cast`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Se hele crewet på TMDB →
+              </a>
+            </div>
+
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
+              {crew.map((member) => (
+                <div key={`${member.id}-${member.job}`} className="flex flex-col items-center text-center gap-2">
+                  <div className="relative w-16 h-16 rounded-full overflow-hidden bg-muted">
+                    {member.profile_path ? (
+                      <Image
+                        src={`https://image.tmdb.org/t/p/w185${member.profile_path}`}
+                        alt={member.name}
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">?</div>
+                    )}
+                  </div>
+                  <p className="text-xs font-medium text-foreground leading-tight">{member.name}</p>
+                  <p className="text-xs text-muted-foreground leading-tight">{member.job}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
       </div>
     </main>
