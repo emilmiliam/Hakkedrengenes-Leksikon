@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTheme } from 'next-themes';
 import {
   Carousel,
   CarouselContent,
@@ -14,6 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 
 export default function Home() {
+  const { theme } = useTheme();
   const [featured, setFeatured] = useState([]);
   const [api, setApi] = useState(null);
 
@@ -35,25 +37,21 @@ export default function Home() {
     {
       name: 'Jacob',
       role: 'Vært & Producer',
-      socials: [
-        // { label: 'Instagram', href: 'https://instagram.com/jacob' },
-      ],
+      socials: [],
     },
     {
       name: 'Dan',
       role: 'Vært',
-      socials: [
-        // { label: 'Instagram', href: 'https://instagram.com/dan' },
-      ],
+      socials: [],
     },
     {
       name: 'Morten',
       role: 'Vært',
-      socials: [
-        // { label: 'Instagram', href: 'https://instagram.com/morten' },
-      ],
+      socials: [],
     },
   ];
+
+  const vignetteColor = theme === 'dark' ? '#242425' : '#dad3c1';
 
   return (
     <div className="min-h-screen bg-background">
@@ -98,27 +96,26 @@ export default function Home() {
       {/* ── Hvem er Hakkedrengene ── */}
       <section className="max-w-5xl mx-auto px-6 py-20">
 
-      {/* Logo */}
-      <div className="flex justify-center mb-10">
-        <div className="relative w-64 h-64">
-          <Image
-            src="/Hakkedrengene.jpg"
-            alt="Hakkedrengene logo"
-            fill
-            className="object-contain"
-          />
-          <div className="absolute inset-0" style={{
-            background: 'radial-gradient(ellipse at center, transparent 55%, oklch(0.145 0 0) 70%)'
-          }} />
+        {/* Logo with vignette */}
+        <div className="flex justify-center mb-10">
+          <div className="relative w-64 h-64">
+            <Image
+              src="/Hakkedrengene.jpg"
+              alt="Hakkedrengene logo"
+              fill
+              className="object-contain"
+            />
+            <div className="absolute inset-0" style={{
+              background: `radial-gradient(ellipse at center, transparent 70%, ${vignetteColor} 70%)`
+            }} />
+          </div>
         </div>
-      </div>
-
 
         <h2 className="text-3xl font-bold text-foreground text-center mb-4">
           Hvem er Hakkedrengene?
         </h2>
         <p className="text-muted-foreground text-center max-w-2xl mx-auto leading-relaxed mb-12">
-        {"I Hakkedrengene går Jacob, Dan og Morten i dybden med de største actionfilm fra 80'erne og frem til nu. De snakker om film med fremragende skuespillere som Arnold Schwarzenegger, Sylvester Stallone, Jean Claude Van Damme, Tom Cruise, Keanu Reeves m.fl. Det er film fra deres barndom som de elsker, og den kærlighed giver de nu videre i podcastformat."}
+          {"I Hakkedrengene går Jacob, Dan og Morten i dybden med de største actionfilm fra 80'erne og frem til nu. De snakker om film med fremragende skuespillere som Arnold Schwarzenegger, Sylvester Stallone, Jean Claude Van Damme, Tom Cruise, Keanu Reeves m.fl. Det er film fra deres barndom som de elsker, og den kærlighed giver de nu videre i podcastformat."}
         </p>
 
         <Separator className="mb-12" />
@@ -130,7 +127,7 @@ export default function Home() {
               key={host.name}
               className="flex flex-col items-center text-center bg-card border border-border rounded-2xl p-6 gap-4"
             >
-              {/* Headshot skeleton placeholder */}
+              {/* Headshot skeleton */}
               <div className="w-28 h-28 rounded-full bg-muted animate-pulse" />
 
               <div>
@@ -138,7 +135,6 @@ export default function Home() {
                 <p className="text-sm text-muted-foreground">{host.role}</p>
               </div>
 
-              {/* Socials — uncomment links in the hosts array above to activate */}
               {host.socials.length > 0 && (
                 <div className="flex gap-2 flex-wrap justify-center">
                   {host.socials.map((s) => (
