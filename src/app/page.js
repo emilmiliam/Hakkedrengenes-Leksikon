@@ -18,6 +18,7 @@ export default function Home() {
   const { theme } = useTheme();
   const [featured, setFeatured] = useState([]);
   const [api, setApi] = useState(null);
+  const [mounted, setMounted] = useState(false); // ✅ ADDED
 
   useEffect(() => {
     fetch('/api/movies?carousel=true')
@@ -33,25 +34,38 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [api]);
 
+  useEffect(() => {
+    setMounted(true); // ✅ ADDED
+  }, []);
+
   const hosts = [
     {
       name: 'Jacob',
-      role: 'Vært & Producer',
-      socials: [],
+      role: 'Vært',
+      bio: 'Podcast og radiovært',
+      image: '/Jacob.jpg',
+      socials: [{ href: 'https://www.instagram.com/finchely/' }],
     },
     {
       name: 'Dan',
       role: 'Vært',
-      socials: [],
+      bio: 'Komiker',
+      image: '/Dan.jpg',
+      socials: [{ href: 'https://www.instagram.com/danandersen_guitarshow/' }],
     },
     {
       name: 'Morten',
       role: 'Vært',
-      socials: [],
+      bio: 'Komiker',
+      image: '/Morten.jpg',
+      socials: [{ href: 'https://www.instagram.com/mortenwichmanncomedy/' }],
     },
   ];
 
-  const vignetteColor = theme === 'dark' ? '#242425' : '#dad3c1';
+  // ✅ CHANGED: only resolve color after mount so server/client match
+  const vignetteColor = mounted
+    ? theme === 'dark' ? '#242425' : '#dad3c1'
+    : '#242425';
 
   return (
     <div className="min-h-screen bg-background">
@@ -127,27 +141,46 @@ export default function Home() {
               key={host.name}
               className="flex flex-col items-center text-center bg-card border border-border rounded-2xl p-6 gap-4"
             >
-              {/* Headshot skeleton */}
-              <div className="w-28 h-28 rounded-full bg-muted animate-pulse" />
+              <div className="relative w-28 h-28 rounded-full overflow-hidden bg-muted">
+                {host.image ? (
+                  <Image src={host.image} alt={host.name} fill className="object-cover" />
+                ) : (
+                  <div className="w-full h-full animate-pulse bg-muted" />
+                )}
+              </div>
 
               <div>
                 <p className="text-lg font-bold text-foreground">{host.name}</p>
-                <p className="text-sm text-muted-foreground">{host.role}</p>
+                <p className="text-sm text-primary font-medium">{host.role}</p>
+                {host.bio && (
+                  <p className="text-xs text-muted-foreground mt-2 leading-relaxed">{host.bio}</p>
+                )}
               </div>
 
               {host.socials.length > 0 && (
-                <div className="flex gap-2 flex-wrap justify-center">
-                  {host.socials.map((s) => (
-                    <a
-                      key={s.label}
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs px-3 py-1 rounded-full border border-border text-muted-foreground hover:text-foreground hover:border-primary transition-colors"
-                    >
-                      {s.label}
-                    </a>
-                  ))}
+                <div className="flex gap-3 justify-center">
+                  {host.socials.map((s) => {
+                    const domain = new URL(s.href).hostname;
+                    return (
+                      <a
+                        key={s.href}
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={domain}
+                        className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:border-primary transition-colors"
+                      >
+                        {/* ✅ CHANGED: Next.js Image with unoptimized for external favicon */}
+                        <Image
+                          src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
+                          alt={domain}
+                          width={18}
+                          height={18}
+                          unoptimized
+                        />
+                      </a>
+                    );
+                  })}
                 </div>
               )}
             </div>
