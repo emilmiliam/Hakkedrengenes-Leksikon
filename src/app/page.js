@@ -18,7 +18,7 @@ export default function Home() {
   const { theme } = useTheme();
   const [featured, setFeatured] = useState([]);
   const [api, setApi] = useState(null);
-  const [mounted, setMounted] = useState(false);
+  const mounted = typeof window !== 'undefined';
 
   useEffect(() => {
     fetch('/api/movies?carousel=true')
@@ -33,10 +33,6 @@ export default function Home() {
     }, 5000);
     return () => clearInterval(interval);
   }, [api]);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const hosts = [
     {
