@@ -19,7 +19,7 @@ export default function MovieCard({ movie }) {
       <Card className="group relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-card border-border p-0">
 
         {/* Poster */}
-        <div className="relative aspect-[2/3] w-full bg-muted">
+        <div className="relative aspect-2/3 w-full bg-muted">
           {posterUrl ? (
             <Image
               src={posterUrl}
@@ -36,7 +36,7 @@ export default function MovieCard({ movie }) {
         </div>
 
         {/* Info */}
-        <div className="p-3 flex flex-col justify-between h-[88px]">
+        <div className="p-3 flex flex-col justify-between h-22">
           <h3 className="font-semibold text-sm leading-tight line-clamp-2 text-foreground">
             {movie.title}
           </h3>
