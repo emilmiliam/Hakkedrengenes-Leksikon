@@ -36,7 +36,7 @@ export default function MovieCard({ movie }) {
         </div>
 
         {/* Info */}
-        <div className="p-3 space-y-1">
+        <div className="p-3 flex flex-col justify-between h-[88px]">
           <h3 className="font-semibold text-sm leading-tight line-clamp-2 text-foreground">
             {movie.title}
           </h3>
