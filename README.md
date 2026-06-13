@@ -1,36 +1,153 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎬 Hakkedrengenes Leksikon
 
-## Getting Started
+A web application for rating action movies built with **Next.js**, **SQLite (better-sqlite3)**, **Tailwind CSS**, and the **TMDB API**. The app lets you search for movies via TMDB, save them to a local database, and rate them across custom action-movie criteria.
 
-First, run the development server:
+***
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js 16, React 19, Tailwind CSS v4 |
+| UI Components | shadcn/ui, Radix UI, HugeIcons |
+| Backend | Next.js API Routes |
+| Database | SQLite via `better-sqlite3` |
+| External API | [TMDB (The Movie Database)](https://www.themoviedb.org/) |
+
+***
+
+## 📦 Prerequisites
+
+Make sure you have the following installed before getting started:
+
+- [Node.js](https://nodejs.org/) (v18 or later recommended)
+- npm (comes with Node.js)
+
+***
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://codeberg.org/emilmiliam/my-app.git
+cd my-app
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Set up your environment variables
+
+The project requires a TMDB API key to search for and fetch movie data.
+
+> **⚠️ Note on the `.env` file:**
+> A `.env.txt` file has been included in the project as a convenience so you can see the required format and a working API key. However, **it is strongly recommended that you create your own API key** — it's completely free through TMDB. The included key has already expired once since the project was first created, so there is a real chance it may have changed again by the time you read this.
+
+**To get your own free TMDB API key:**
+
+1. Go to [https://www.themoviedb.org/](https://www.themoviedb.org/) and create a free account
+2. Navigate to **Settings → API** and request an API key (choose "Developer")
+3. Copy your API key
+
+**Then create your `.env` file:**
+
+```bash
+# Either rename .env.txt to .env and update the key:
+cp .env.txt .env
+
+# Or create a new .env manually:
+echo "TMDB_API_KEY=your_api_key_here" > .env
+```
+
+Your `.env` should contain:
+
+```env
+TMDB_API_KEY=your_api_key_here
+```
+
+### 4. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the app running.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+***
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Project Structure
 
-## Learn More
+Below is a simplified overview of the most important files and folders in the project:
 
-To learn more about Next.js, take a look at the following resources:
+```text
+my-app/
+├── data/
+│   └── hakkedrengene.db
+├── public/
+├── src/
+│   ├── app/
+│   │   ├── admin/
+│   │   │   └── page.js
+│   │   ├── api/
+│   │   │   ├── movies/
+│   │   │   │   └── route.js
+│   │   │   ├── seed/
+│   │   │   │   └── route.js
+│   │   │   └── tmdb/
+│   │   │       └── route.js
+│   │   ├── movies/
+│   │   │   ├── [id]/
+│   │   │   │   └── page.js
+│   │   │   └── page.js
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── layout.js
+│   │   └── page.js
+│   ├── components/
+│   │   ├── ui/
+│   │   ├── FilterPanel.jsx
+│   │   ├── MovieCard.jsx
+│   │   ├── MovieDetails.jsx
+│   │   ├── Navbar.jsx
+│   │   ├── RatingBreakdown.jsx
+│   │   ├── SearchBar.jsx
+│   │   ├── ThemeProvider.jsx
+│   │   └── ThemeToggle.jsx
+│   └── lib/
+│       ├── categories.js
+│       ├── db.js
+│       └── utils.js
+├── .env
+├── .gitignore
+├── components.json
+├── eslint.config.mjs
+├── jsconfig.json
+├── next.config.mjs
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+└── README.md
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+***
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔧 Available Scripts
 
-## Deploy on Vercel
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the development server at `localhost:3000` |
+| `npm run build` | Build the app for production |
+| `npm run start` | Start the production server (requires `npm run build` first) |
+| `npm run lint` | Run ESLint |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+***
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🌐 Environment Variables
+
+| Variable | Description | Required |
+|---|---|---|
+| `TMDB_API_KEY` | Your TMDB API key for fetching movie data | ✅ Yes |
