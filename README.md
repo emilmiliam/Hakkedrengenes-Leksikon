@@ -56,7 +56,7 @@ The project requires a TMDB API key to search for and fetch movie data.
 **Then create your `.env` file:**
 
 ```bash
-# Either rename .env.txt to .env and update the key:
+# Either rename env.txt to .env and update the key:
 cp env.txt .env
 
 # Or create a new .env manually:
