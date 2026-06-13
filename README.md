@@ -30,8 +30,8 @@ Make sure you have the following installed before getting started:
 ### 1. Clone the repository
 
 ```bash
-git clone https://codeberg.org/emilmiliam/my-app.git
-cd my-app
+git clone https://codeberg.org/emilmiliam/hakkedrengenes-leksikon.git
+cd hakkedrengenes-leksikon
 ```
 
 ### 2. Install dependencies
@@ -57,7 +57,7 @@ The project requires a TMDB API key to search for and fetch movie data.
 
 ```bash
 # Either rename .env.txt to .env and update the key:
-cp .env.txt .env
+cp env.txt .env
 
 # Or create a new .env manually:
 echo "TMDB_API_KEY=your_api_key_here" > .env
@@ -84,7 +84,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the a
 Below is a simplified overview of the most important files and folders in the project:
 
 ```text
-my-app/
+hakkedrengenes-leksikon/
 ├── data/
 │   └── hakkedrengene.db
 ├── public/
