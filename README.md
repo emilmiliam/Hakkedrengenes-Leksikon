@@ -30,7 +30,7 @@ Make sure you have the following installed before getting started:
 ### 1. Clone the repository
 
 ```bash
-git clone https://codeberg.org/emilmiliam/hakkedrengenes-leksikon.git
+git clone [https://codeberg.org/emilmiliam/hakkedrengenes-leksikon.git](https://github.com/emilmiliam/Hakkedrengenes-Leksikon.git)
 cd hakkedrengenes-leksikon
 ```
 
