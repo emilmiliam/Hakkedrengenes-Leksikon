@@ -31,7 +31,7 @@ Make sure you have the following installed before getting started:
 
 ```bash
 git clone https://github.com/emilmiliam/Hakkedrengenes-Leksikon.git
-cd hakkedrengenes-leksikon
+cd Hakkedrengenes-Leksikon
 ```
 
 ### 2. Install dependencies
