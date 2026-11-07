@@ -42,10 +42,7 @@ npm install
 
 ### 3. Set up your environment variables
 
-The project requires a TMDB API key to search for and fetch movie data.
-
-> **⚠️ Note on the `.env` file:**
-> A `env.txt` file has been included in the project as a convenience so you can see the required format and a working API key. However, **it is strongly recommended that you create your own API key** — it's completely free through TMDB. The included key has already expired once since the project was first created, so there is a real chance it may have changed again by the time you read this.
+⚠️ The project requires a TMDB API key to search for and fetch movie data.
 
 **To get your own free TMDB API key:**
 
