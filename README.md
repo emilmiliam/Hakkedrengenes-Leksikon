@@ -53,10 +53,6 @@ npm install
 **Then create your `.env` file:**
 
 ```bash
-# Either rename env.txt to .env and update the key:
-cp env.txt .env
-
-# Or create a new .env manually:
 echo "TMDB_API_KEY=your_api_key_here" > .env
 ```
 
